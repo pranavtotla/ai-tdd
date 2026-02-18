@@ -51,15 +51,19 @@ Write tests for:
 
 Every test for new behavior must fail — no implementation exists yet. If a test passes, it is testing existing behavior. Separate it from new-behavior tests and flag it during review so the human sees the distinction clearly.
 
+New-behavior tests must fail for expected assertion reasons (wrong output, wrong state, missing side effect), not because the test harness is broken. Import errors, syntax errors, configuration errors, or missing setup are harness failures and must be fixed before Step 3.
+
 Name each test as a plain-language statement of the behavior it verifies. The test name is the specification line item the human reviews at the gate — it must be self-explanatory without reading the test body. Each test should verify one behavior.
 
-Do not write implementation code. Not stubs, not helpers, not scaffolding. The moment implementation thinking enters the test-writing phase, tests start optimizing for ease of implementation rather than correctness of specification.
+Do not write production implementation code in Step 2. Not app/runtime stubs, business-logic helpers, or product scaffolding. The moment implementation thinking enters the test-writing phase, tests start optimizing for ease of implementation rather than correctness of specification.
+
+Test-only support code is allowed when needed to express behavior: fixtures, mocks, factories, and test-data setup. Keep this code under test paths and do not embed product logic in it.
 
 ### Step 3: Review Tests — HARD GATE
 
 This is where alignment happens. The human is not reviewing "test quality" — they are reviewing whether the AI understood the requirement correctly. The tests are the specification. If the specification is wrong, the implementation will be precisely, confidently wrong.
 
-Present the tests. Show what was written, what scenarios are covered, and confirm all tests fail. Then stop. See **`references/review-protocol.md`** for presentation format.
+Present the tests. Show what was written, what scenarios are covered, and confirm new-behavior tests fail for expected assertion reasons. If failures are due to harness/setup issues, fix those first and re-run before presenting. Then stop. See **`references/review-protocol.md`** for presentation format.
 
 **Do not proceed until the human explicitly approves.**
 
@@ -97,7 +101,7 @@ On rejection: same collaborative loop as Step 3.
 
 ## Anti-Patterns
 
-**Code before tests.** The core violation. Delete it. Restart from Step 2. It cannot be kept as "reference" — its existence biases test writing toward confirming what was already built.
+**Code before tests.** The core violation. Discard AI-authored implementation code created in the current cycle and restart from Step 2. Do not delete or rewrite pre-existing user code or repository history. Code-first implementation cannot be kept as "reference" — its existence biases test writing toward confirming what was already built.
 
 **Tests that pass immediately.** Either testing existing behavior or testing nothing. Investigate before proceeding.
 

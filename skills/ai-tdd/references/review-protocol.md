@@ -21,6 +21,9 @@ Scenarios:
   • ...
 
 Failing: [all / N of M — explain any that pass]
+Command: [exact command(s) run]
+Scope: [targeted tests / full suite]
+Env: [default / relevant overrides]
 
 ⏸ Approve, or tell me what to change.
 ════════════════════════════════════════════════════════
@@ -44,6 +47,9 @@ Scenarios:
   • concurrent login from second device invalidates first session
 
 Failing: all 7
+Command: pnpm vitest src/__tests__/auth.test.ts src/__tests__/auth.integration.test.ts
+Scope: targeted tests for auth feature
+Env: default local test environment
 
 ⏸ Approve, or tell me what to change.
 ════════════════════════════════════════════════════════
@@ -56,6 +62,7 @@ Include:
 - File paths
 - Every scenario as a plain description of behavior being verified
 - Confirmation that new-behavior tests fail, with explanation for any that pass (existing behavior)
+- Exact command(s) used, scope, and relevant environment notes so results are reproducible
 
 Do not include opinions on coverage, quality, or completeness.
 
@@ -74,6 +81,10 @@ Files:
 
 Tests: [X/X passing]
 Regressions: [none / details]
+Approved command: [exact command(s) run]
+Regression command: [exact command(s) run]
+Scope: [approved tests + broader suite]
+Env: [default / relevant overrides]
 
 [Diff summary if modifying existing code]
 
@@ -100,6 +111,10 @@ Files:
 
 Tests: 7/7 passing
 Regressions: none (existing 142 tests still passing)
+Approved command: pnpm vitest src/__tests__/auth.test.ts src/__tests__/auth.integration.test.ts
+Regression command: pnpm test
+Scope: approved auth tests + full suite regression run
+Env: default local test environment
 
 Concern: lockout counter resets on server restart since it is
 stored in-memory. May want to persist to database in a follow-up.
@@ -115,6 +130,7 @@ Include:
 - Files with brief change descriptions
 - Test results with exact pass count
 - Regression check results
+- Exact commands used, scope, and relevant environment notes for reproducibility
 - Diff summary in existing codebases
 - Honest concerns if they exist
 
