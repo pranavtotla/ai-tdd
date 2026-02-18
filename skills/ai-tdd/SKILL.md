@@ -89,6 +89,12 @@ On rejection: same collaborative loop as Step 3.
 
 ## Edge Cases
 
+**New feature (clean slate)** — Run the standard cycle without exceptions: plan the scope, write failing tests for new behavior, pass Step 3 review, implement only what approved tests require, run approved tests plus broader regression checks, then pass Step 5 review.
+
+**Chunked delivery (independent components)** — If chunking is approved in Step 1, each chunk must complete a full Step 2 → Step 5 cycle before starting the next chunk. Do not batch multiple unreviewed chunks into a single gate.
+
+**Existing behavior already covered** — Treat already-passing tests as baseline coverage, then add failing tests only for missing behavior in scope. Present both groups clearly at Step 3 so the human can distinguish baseline vs new specification.
+
 **Bug fixes** — Same workflow. Plan describes the bug. Tests reproduce it (they fail against current code). Code fixes it. Tests go green.
 
 **Refactoring** — Write tests that lock current behavior. Approve them through Step 3. Refactor in Step 4. Tests stay green. If behavior needs to change, that is a feature — start a new cycle.
