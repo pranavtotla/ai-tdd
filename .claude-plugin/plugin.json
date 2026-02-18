@@ -1,0 +1,13 @@
+{
+  "name": "ai-tdd",
+  "version": "1.0.0",
+  "description": "AI-driven Test-Driven Development. Tests as the alignment mechanism between human intent and AI output.",
+  "author": {
+    "name": "Pranav Totla",
+    "url": "https://github.com/pranavtotla"
+  },
+  "repository": "https://github.com/pranavtotla/ai-tdd",
+  "license": "MIT",
+  "keywords": ["tdd", "testing", "test-driven-development", "ai-tdd"],
+  "skills": "."
+}
