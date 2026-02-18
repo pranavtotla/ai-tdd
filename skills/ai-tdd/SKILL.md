@@ -1,5 +1,6 @@
 ---
 name: ai-tdd
+version: 1.0.0
 description: This skill should be used when the user asks to "build with TDD", "write tests first", "ai-tdd", "test-driven development", "implement with tests", "tests before code", "TDD workflow", "write failing tests first", or wants AI to write tests before implementation code. Enforces a 5-step workflow where AI writes tests, human approves them, then AI writes code constrained by those tests.
 ---
 

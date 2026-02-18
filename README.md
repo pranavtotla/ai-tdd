@@ -32,9 +32,11 @@ Steps 3 and 5 are hard gates. AI does not proceed without explicit human approva
 claude plugin add pranavtotla/ai-tdd
 ```
 
+Then invoke with `/ai-tdd` or let it trigger automatically.
+
 ### As a standalone skill
 
-Copy the `ai-tdd/` folder into your tool's skill directory:
+Copy `skills/ai-tdd/` into your tool's skill directory:
 
 | Tool | Path |
 |------|------|
@@ -49,13 +51,13 @@ Or clone and copy:
 git clone https://github.com/pranavtotla/ai-tdd.git /tmp/ai-tdd
 
 # Claude Code
-cp -r /tmp/ai-tdd/ai-tdd ~/.claude/skills/ai-tdd
+cp -r /tmp/ai-tdd/skills/ai-tdd ~/.claude/skills/ai-tdd
 
 # Codex
-cp -r /tmp/ai-tdd/ai-tdd ~/.codex/skills/ai-tdd
+cp -r /tmp/ai-tdd/skills/ai-tdd ~/.codex/skills/ai-tdd
 
 # Project-level (any tool)
-cp -r /tmp/ai-tdd/ai-tdd .agent/skills/ai-tdd
+cp -r /tmp/ai-tdd/skills/ai-tdd .agent/skills/ai-tdd
 ```
 
 ## Usage
@@ -66,23 +68,24 @@ The skill triggers automatically when you say things like:
 - "implement with tests before code"
 - "TDD workflow"
 
-Or invoke directly as `/ai-tdd` where supported.
+Or invoke directly with `/ai-tdd`.
 
 ## Structure
 
 ```
 .
 ├── .claude-plugin/
-│   └── plugin.json             # Claude Code plugin manifest
-├── ai-tdd/
-│   ├── SKILL.md                # Core workflow
-│   └── references/
-│       └── review-protocol.md  # Presentation format for review gates
+│   └── plugin.json                 # Claude Code plugin manifest
+├── commands/
+│   └── ai-tdd.md                   # /ai-tdd slash command
+├── skills/
+│   └── ai-tdd/
+│       ├── SKILL.md                # Core workflow
+│       └── references/
+│           └── review-protocol.md  # Presentation format for review gates
 ├── README.md
 └── LICENSE
 ```
-
-The `ai-tdd/` folder is the skill. The `.claude-plugin/` folder makes the repo installable as a Claude Code plugin. Both work independently.
 
 ## License
 

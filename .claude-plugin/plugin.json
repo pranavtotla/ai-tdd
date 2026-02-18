@@ -8,6 +8,5 @@
   },
   "repository": "https://github.com/pranavtotla/ai-tdd",
   "license": "MIT",
-  "keywords": ["tdd", "testing", "test-driven-development", "ai-tdd"],
-  "skills": "."
+  "keywords": ["tdd", "testing", "test-driven-development", "ai-tdd"]
 }
