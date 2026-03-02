@@ -14,6 +14,12 @@ When AI writes tests first, then code, the reward function flips. Code optimizes
 Step 1       Step 2         Step 3          Step 4        Step 5
 Plan    →  Write Tests  →  Review Tests  →  Write Code  →  Review Code
  AI          AI             HUMAN (gate)      AI            HUMAN (gate)
+
+                              ↓ (optional, after Step 5 approval)
+
+                    Step 6           Step 7
+                  Write E2E     →  Review E2E
+                    AI              HUMAN (gate)
 ```
 
 1. **Plan** — AI explores the codebase, produces implementation + test strategy
@@ -21,8 +27,28 @@ Plan    →  Write Tests  →  Review Tests  →  Write Code  →  Review Code
 3. **Review Tests** — Human approves the spec (hard gate)
 4. **Write Code** — AI implements code to pass the approved tests
 5. **Review Code** — Human approves the implementation (hard gate)
+6. **Write E2E** — (Optional) AI writes Playwright E2E tests for user workflows
+7. **Review E2E** — Human approves E2E tests (hard gate)
 
-Steps 3 and 5 are hard gates. AI does not proceed without explicit human approval.
+Steps 3, 5, and 7 are hard gates. AI does not proceed without explicit human approval.
+
+## E2E Testing (v2.0)
+
+After Step 5 approval, the skill offers to write exhaustive Playwright E2E tests for:
+- User-facing UI components
+- Multi-step user workflows
+- 2D/3D view interactions
+- Visual regression (snapshots)
+
+E2E tests cover:
+- ✅ Happy path workflows
+- ✅ Edge cases (empty states, overflow, special characters)
+- ✅ 2D and 3D view modes
+- ✅ Panel/modal states
+- ✅ Selection states (single, multi, none, mixed)
+- ✅ Integration with other features
+
+The skill follows existing test patterns from your Playwright repository and updates POMs as needed.
 
 ## Install
 
@@ -67,6 +93,9 @@ The skill triggers automatically when you say things like:
 - "write tests first"
 - "implement with tests before code"
 - "TDD workflow"
+- "add e2e tests"
+- "playwright tests"
+- "2d/3d view tests"
 
 Or invoke directly with `/ai-tdd`.
 
@@ -80,11 +109,27 @@ Or invoke directly with `/ai-tdd`.
 │   └── ai-tdd.md                   # /ai-tdd slash command
 ├── skills/
 │   └── ai-tdd/
-│       ├── SKILL.md                # Core workflow
+│       ├── SKILL.md                # Core workflow (v2.0 with E2E)
 │       └── references/
-│           └── review-protocol.md  # Presentation format for review gates
+│           ├── review-protocol.md  # Presentation format for review gates
+│           └── playwright-e2e.md   # Playwright E2E testing patterns
 ├── README.md
 └── LICENSE
+```
+
+## E2E Test Commands
+
+After E2E tests are approved:
+
+```bash
+# Run E2E tests
+npx playwright test [test-file] --timeout=120000
+
+# Update snapshots
+npx playwright test [test-file] --update-snapshots
+
+# Debug mode
+PWDEBUG=1 npx playwright test --grep "TC_XXX"
 ```
 
 ## License
