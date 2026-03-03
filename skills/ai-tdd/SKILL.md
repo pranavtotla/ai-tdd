@@ -170,6 +170,64 @@ Before writing E2E tests, I need to know:
 3. Identify POMs, fixtures, and helpers available
 4. Note the test ID convention (e.g., `TC_FEATURE_XXX`)
 
+#### MANDATORY: Read Existing Tests in the Same Area
+
+**Before writing ANY new E2E test file, you MUST:**
+
+1. **Identify the target folder** — Is this an existing folder or a new folder?
+   - **Existing folder** → Read ALL test files in that folder to understand patterns
+   - **New folder** → Read tests from a similar feature area as reference
+
+2. **Read the primary reference test for the feature area:**
+   - **Program Mode** → Read `programMode/basic.spec.ts` first — this is the canonical example for Program Mode test patterns
+   - **Other feature areas** → Read `[feature]/basic.spec.ts` or the first test file in that folder
+
+3. **Read common/shared files to avoid redundancy:**
+   ```bash
+   # Check for existing common methods
+   ls -la [playwright-repo]/src/common/
+   cat [playwright-repo]/src/common/project.ts
+   cat [playwright-repo]/src/common/geometry.ts
+   cat [playwright-repo]/src/common/locators.ts
+   ```
+
+4. **Before writing ANY helper function, check if it already exists:**
+   ```bash
+   # Search for existing helper methods
+   grep -r "function methodName" [playwright-repo]/src/common/
+   grep -r "async function" [playwright-repo]/src/common/*.ts
+   ```
+
+**Do NOT:**
+- Write a new helper function if one already exists in common files
+- Create patterns that conflict with existing tests in the same folder
+- Ignore the established conventions from `basic.spec.ts` or similar reference files
+
+**Present what you found:**
+```
+═══ EXISTING TEST ANALYSIS ═════════════════════════════
+
+Target folder: [path/to/feature/]
+Reference tests read:
+  • [basic.spec.ts] — [patterns observed]
+  • [other.spec.ts] — [patterns observed]
+
+Common methods available:
+  • ensureDrawMode() — from common/project.ts
+  • setCameraPosition() — from common/camera.ts
+  • clearSelection() — from common/geometry.ts
+  • [list other relevant methods]
+
+Patterns I will follow:
+  • Camera position: [observed pattern]
+  • Test ID format: [observed format]
+  • beforeEach setup: [observed setup]
+  • Helper location: [where helpers should go]
+
+⏸ Confirm these patterns, or point me to different references.
+════════════════════════════════════════════════════════
+```
+
 #### Check Existing Related Tests
 
 Before writing new tests, find and run existing tests related to the feature:
@@ -466,6 +524,10 @@ If implementation changes break existing E2E tests:
 **Missing locators for E2E** — If UI elements lack `data-testid` attributes, do not write hacky workarounds. Stop and request the locator be added to the component. Resume after it's added. This ensures tests remain stable.
 
 ## Anti-Patterns
+
+**Writing tests without reading existing tests in the same folder.** Before adding `tagsCrud.spec.ts` to `programMode/`, you must first read `programMode/basic.spec.ts` and other tests in that folder. Skipping this results in inconsistent patterns, conflicting conventions, and duplicated code.
+
+**Writing redundant helper methods.** Before creating any helper function, search the `common/` directory to check if it already exists. Duplicating `ensureDrawMode()`, `setCameraPosition()`, or similar utilities wastes effort and creates maintenance burden. Always reuse existing common methods.
 
 **Code before tests.** The core violation. Discard AI-authored implementation code created in the current cycle and restart from Step 2. Do not delete or rewrite pre-existing user code or repository history. Code-first implementation cannot be kept as "reference" — its existence biases test writing toward confirming what was already built.
 
